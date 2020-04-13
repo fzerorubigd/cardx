@@ -1,0 +1,74 @@
+.card {
+  position: relative;
+}
+
+.card-content {
+  /* Content should be clipped if too large */
+  overflow: hidden;
+
+  /* Position must be relative for clipping to work on absolute positioned child elements */
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+.card-size-05x05 {
+  /* Small token */
+  width:  .5in;
+  height: .5in;
+}
+
+.card-size-075x075 {
+  /* Large token */
+  width:  .75in;
+  height: .75in;
+}
+
+.card-size-25x35 {
+  /* Standard card */
+  width:  2.5in;
+  height: 3.5in;
+}
+
+.card-size-25x25 {
+  /* Square card */
+  width:  2.5in;
+  height: 2.5in;
+}
+
+.card-size-35x35 {
+  /* Large square card */
+  width:  3.5in;
+  height: 3.5in;
+}
+
+.card-size-35x25 {
+  /* Standard card in landscape */
+  width:  3.5in;
+  height: 2.5in;
+}
+
+.card-size-35x55 {
+  /* Jumbo card */
+  width:  3.5in;
+  height: 5.5in;
+}
+
+.card-size-175x35 {
+  /* Domino card */
+  width:  1.75in;
+  height: 3.5in;
+}
+
+.card-size-page {
+  /* Full page card */
+  width:  7.5in;
+  height: 10.5in;
+}
+
+.card-size-cover {
+  /* Full page card (special case) */
+  width:  7.5in;
+  height: 10.5in;
+}

@@ -1,0 +1,22 @@
+---
+name: My card game
+author: forud<fzero@rubi.gd>
+copyright: (C) 2020
+version: 0.0.1
+
+decks:
+  - 
+    name: First Set
+    description: the first set of cards
+    template: set1.html
+    data: set1.csv
+    width: 25
+    height: 35
+  - 
+    name: Second Set
+    description: the second set of cards
+    template: set2.html
+    data: set2.csv
+    width: 25
+    height: 35
+   

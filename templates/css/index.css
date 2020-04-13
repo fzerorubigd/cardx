@@ -1,0 +1,434 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ui-section {
+  color: black;
+
+  opacity: .3;
+
+  font-family: monospace;
+  font-size: .9em;
+
+  margin: 1.25cm auto -.5cm auto;
+
+  text-align: center;
+}
+
+.ui-section ~ .ui-section {
+  /* Selects every .ui-section after the first hit */
+  margin-top: -.5cm;
+}
+
+.ui-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.ui-modal-content {
+  font-family: monospace;
+  font-size: 1em;
+
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+
+  width: 480px;
+
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+}
+
+.ui-modal-header {
+  padding: 14px;
+
+  background-color: rgba(245, 245, 245, 1);
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.ui-header {
+  margin: 1cm auto -.5cm auto;
+  font-size: .9em;
+  padding: .25cm .5cm .25cm .5cm;
+  color: black;
+  border: 1px solid #e5e5e5;
+  background-color: lightgoldenrodyellow;
+  box-shadow: 0 2px 1px #e5e5e5;
+}
+
+div.ui-header a {
+  color: #0000ee;
+}
+
+div.ui-toolbar a,
+div.ui-modal-body a,
+div.ui-modal-header a {
+  color: black;
+}
+
+div.ui-modal-header a {
+  text-decoration: none;
+}
+
+.ui-modal-body {
+  padding: 2px 16px;
+}
+
+/* The Close Button */
+.ui-modal-close {
+  color: #c4c4c4;
+  float: right;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.ui-modal-close:hover,
+.ui-modal-close:focus {
+  color: #414141;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auto-template-field {
+  padding-left: 0.1in;
+  padding-right: 0.1in;
+  padding-top: 0.01in;
+  padding-bottom: 0.01in;
+}
+
+.auto-template-field:nth-of-type(1) {
+  margin-top: 0.2in;
+  margin-bottom: 0.2in;
+}
+
+.auto-template-number {
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+
+.auto-template-title {
+  font-weight: bold;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.auto-template-text {
+  font-size: 1em;
+  text-align: center;
+}
+
+.ui-toolbar {
+  /* We want this stuff floating around */
+  position: fixed;
+
+  /* ..and it should float on top of any content */
+  z-index: 2;
+
+  width: 100%;
+
+  padding: 10px 20px 10px 20px;
+
+  background-color: rgba(245, 245, 245, 0.98);
+
+  border-bottom: 1px solid #e5e5e5;
+
+  font-family: monospace;
+  font-size: 1em;
+
+  -webkit-transition: top .3s;
+  transition: top .3s;
+}
+
+.ui-toolbar-hidden {
+  top: -50px;
+}
+
+.ui-toolbar-revealed {
+  top: 0;
+}
+
+.ui-toolbar-inner {
+  margin: 0 auto;
+
+  width: 21cm;
+}
+
+.ui-action {
+  float: left;
+
+  margin-right: .35cm;
+
+  font-size: .9em;
+
+  cursor: pointer;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div.ui-action a {
+  color: black;
+
+  text-decoration: none;
+}
+
+div.ui-action a:hover {
+  color: #414141;
+}
+
+.ui-other {
+  float: right;
+
+  text-align: right;
+
+  margin-left: .3cm;
+
+  cursor: pointer;
+}
+
+.ui-note {
+  cursor: initial;
+
+  font-size: .85em;
+
+  margin-top: 4px;
+}
+
+.ui-footer {
+  text-align: center;
+
+  font-family: monospace;
+
+  opacity: 0.3;
+
+  margin-top: 1.5cm;
+  margin-bottom: 1cm;
+}
+
+svg:hover .hoverable {
+  fill: #414141;
+}
+
+.page {
+  /* A4 portrait */
+  width: 21cm;
+  height: 29.7cm;
+
+  /* Add some padding. Values higher than 0.97cm or lower than 0.5cm will cause problems */
+  padding: 0.97cm;
+
+  background: #fff;
+
+  position: relative;
+
+  /* Set up a z-index context to allow putting cut guides behind, or on top of content */
+  z-index: 0;
+
+  /* Clear any outline */
+  outline: 0;
+}
+
+.page-content {
+  /* Lay out cards horizontally */
+  display: flex;
+  flex-wrap: wrap;
+
+  /* Ensure all cards are aligned starting from the top/start; not the center */
+  align-content: flex-start;
+
+  /* Exactly the size of 3 poker-sized cards laid out horizontally. This is the "safe zone" */
+  width: 7.5in;
+  /* Exactly the size of 3 poker-sized cards laid out vertically. This is the "safe zone" */
+  height: 10.5in;
+
+  /* Center content in case of mismatched page padding */
+  margin: auto;
+}
+
+.page-content-hidden {
+  text-align: center;
+
+  opacity: 0.6;
+
+  width: 100%;
+  margin: 10%;
+}
+
+.page-footer {
+  color: rgb(100, 100, 100);
+
+  font-family: sans-serif;
+
+  margin-top: 0.5cm;
+  height: 0.4cm;
+
+  font-size: 0.7em;
+
+  position: relative;
+
+  /* Clip any content over a single line */
+  overflow: hidden;
+}
+
+.page-footer-content a {
+  color: rgb(100, 100, 100);
+}
+
+.page-footer-content {
+  margin-right: .4cm;
+
+  float: left;
+}
+
+.page-footer-tag {
+  background-color: rgb(231, 231, 231);
+
+  /* Tag contents should be slightly smaller */
+  font-size: .7em;
+
+  border-radius: 4px;
+
+  padding: .04cm .1cm .04cm .1cm;
+
+  margin-left: .1cm;
+
+  float: right;
+}
+
+.cut-guide {
+  /* Ensure that the cut guides do not take up space between cards */
+  position: absolute;
+
+  width: 5mm;
+  height: 5mm;
+
+  /* Cut guides should appear on top of any content. Use -1 to appear below */
+  z-index: 1;
+
+  opacity: .4;
+}
+
+.cut-guide-line {
+  fill: none;
+
+  stroke: #000000;
+  stroke-width: 1;
+
+  shape-rendering: crispEdges;
+}
+
+.cut-guide-top {
+  top: -2.5mm;
+}
+
+.cut-guide-left {
+  left: -2.5mm;
+}
+
+.cut-guide-right {
+  right: -2.5mm;
+}
+
+.cut-guide-bottom {
+  bottom: -2.5mm;
+}
+
+.do-not-print {
+  /* intentionally left blank */
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .cut-guide-line {
+    stroke-width: .5;
+  }
+}
+
+@media screen {
+  html, body {
+    background-color: #eee;
+
+    padding-top: .5cm;
+  }
+
+  .page {
+    /* Put some separation between pages. Purely for show */
+    margin: 1cm auto;
+
+    /* Pages just look better with some drop shadow */
+    box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  }
+}
+
+@media print {
+  @page {
+    /* This can be set to 'landscape'. Browsers that support this field will default to that
+       orientation, others will just ignore it. */
+    size: A4 portrait;
+  }
+
+  html, body {
+    background-color: #fff;
+  }
+
+  .do-not-print {
+    /* We don't want to just hide these elements; we want to pretend they aren't even there, so that
+       they don't take up any space. Note that hiding cut guides or footer uses `visibility: hidden`
+       instead, as those *should* still take up space, but just be invisible. */
+    display: none !important;
+  }
+
+  .page {
+    /* Safari-hack to avoid additional blank pages. Safari forces margins on the printed content,
+       so it likely goes beyond the paper bounds and thus a new page is added.
+      Chrome does not seem to have any issue with this setting, so we can just leave it here */
+      height: 0 !important;
+
+      /* Page width is slightly reduced to combat browser-added margins, causing content to shrink */
+      width: 20cm !important;
+      /* Padding is also reduced. Note that adjusting width affects padding needed, and vice versa */
+      padding: 0.4cm;
+
+    /* Chrome - When printing: enable printing of backgrounds. Set margins to Minimum, and disable Headers & Footers */
+    /* Safari - When printing: enable printing of backgrounds. */
+
+    /* Clear any margins, but keep the current paddings. This is important */
+    margin: 0 !important;
+
+    background: initial !important;
+    box-shadow: none !important;
+
+    /* Force page breaks after each .page element of the document */
+    page-break-after: always;
+    page-break-before: none;
+    page-break-inside: avoid;
+  }
+
+  /* Except for the last .page element to avoid a blank ending page */
+  .page:last-child {
+    page-break-after: auto;
+  }
+}

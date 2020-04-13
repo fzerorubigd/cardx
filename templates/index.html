@@ -1,0 +1,191 @@
+{{ define "card_border" }}
+ <svg class="cut-guide cut-guide-top cut-guide-left" viewBox="0 0 10 10">
+    <use xlink:href="#cut-guide-lines" />
+  </svg>
+  <svg class="cut-guide cut-guide-top cut-guide-right" viewBox="0 0 10 10">
+    <use xlink:href="#cut-guide-lines" />
+  </svg>
+  <svg class="cut-guide cut-guide-bottom cut-guide-left" viewBox="0 0 10 10">
+    <use xlink:href="#cut-guide-lines" />
+  </svg>
+  <svg class="cut-guide cut-guide-bottom cut-guide-right" viewBox="0 0 10 10">
+    <use xlink:href="#cut-guide-lines" />
+  </svg>
+{{ end  }}
+
+{{ define "section" }}
+<div class="ui-section do-not-print">
+    <p><strong>Cards (Page {{ .PageNumber }}/{{ .Total }})</strong></p>
+</div>
+{{ end }}
+
+{{ define "page" }}
+{{ template "section" . }}
+<div class="page {{ .CSSClass  }}">
+    <div class="page-content">
+	{{ range $card := .Cards }}
+	<div class="card card-size-{{ $.Width  }}x{{ $.Height }}">
+	    {{ template "card_border" $card }}
+	     <div class="card-content">
+		 {{ template "card" $card }}
+	     </div>
+        </div>
+	{{ end }}
+    </div>
+    <div class="page-footer">
+	<div class="page-footer-content">{{ .Name }}</div>
+	<div class="page-footer-content">{{ .Description }}</div>
+	<div class="page-footer-content">{{ .Version  }}</div>
+	<div class="page-footer-content">{{ .Copyright  }} {{ .Author }}</div>
+	<div class="page-footer-tag page-number-tag">Page {{ .PageNumber }} / {{ .Total  }}</div>
+    </div>
+</div>
+{{ end }}
+
+
+{{ define "toolbar" }}
+    <div id="toolbar" class="ui-toolbar ui-toolbar-hidden do-not-print">
+      <!-- SVG icons (report, print, help, toggle on/off) from https://design.google.com/icons/
+           Licensed under Apache License Version 2.0 -->
+      <div class="ui-action" onclick="window.location='https://github.com/fzerorubigd/cardx/issues/new';" title="Find any bugs? Missing a feature? Let me know!">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path class="hoverable" fill="#000000" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+        </svg>
+        <div>
+          <small>Report a bug</small>
+        </div>
+      </div>
+      <div class="ui-toolbar-inner" id="ui-toolbar-inner">
+        <div class="ui-other" onclick="toggleHelp(true);" title="Show some helpful information">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+          </svg>
+        </div>
+        <div class="ui-other ui-note" style="max-width: 7cm;">
+          <!-- TODO: can be used to display announcements or similar notices. -->
+          {{ .Copyright }} {{ .Author }}
+        </div>
+        <div class="ui-action" onclick="window.print();" title="Print pages">
+          <svg width="32" height="32" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+          </svg>
+        </div>
+        <div class="ui-action ui-note" id="ui-stats" style="width: 70px;">
+          {{ .CardsCount }} cards<br />
+          {{ .PagesCount }} pages
+        </div>
+        <div id="toggle-card-backs" class="ui-action" onclick="toggleCardBacks();" title="Toggle card backs">
+          <svg id="toggle-card-backs-on" width="18" height="18" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <svg id="toggle-card-backs-off" width="18" height="18" viewBox="0 0 24 24" style="display: none;">
+            <path class="hoverable" fill="#000000" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <div>BACKS</div>
+        </div>
+        <div id="toggle-two-sided" class="ui-action" onclick="toggleTwoSided();" title="Toggle two-sided printing (*this is only an indication; you still have to enable two-sided printing in your printer settings)">
+          <svg id="toggle-two-sided-on" width="18" height="18" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <svg id="toggle-two-sided-off" width="18" height="18" viewBox="0 0 24 24" style="display: none;">
+            <path class="hoverable" fill="#000000" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <div>TWO-SIDED*</div>
+        </div>
+        <div class="ui-action" onclick="toggleFooter();" title="Toggle page footers">
+          <svg id="toggle-footer-on" width="18" height="18" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <svg id="toggle-footer-off" width="18" height="18" viewBox="0 0 24 24" style="display: none;">
+            <path class="hoverable" fill="#000000" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <div>FOOTERS</div>
+        </div>
+        <div class="ui-action" onclick="toggleCutGuides();" title="Toggle cut guides">
+          <svg id="toggle-cut-guides-on" width="18" height="18" viewBox="0 0 24 24">
+            <path class="hoverable" fill="#000000" d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <svg id="toggle-cut-guides-off" width="18" height="18" viewBox="0 0 24 24" style="display: none;">
+            <path class="hoverable" fill="#000000" d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <div>CUT GUIDES</div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-modal do-not-print" id="ui-modal-help">
+      <div class="ui-modal-content">
+        <div class="ui-modal-header">
+          <span class="ui-modal-close" onclick="toggleHelp(false);">×</span>
+          <a href="https://github.com/fzerorubigd/cardx" title="cardx" target="_blank">
+            <strong>cardx {{ .Version }}</strong>
+          </a>
+        </div>
+        <div class="ui-modal-body">
+	    <p>These pages were generated using <a href="http://github.com/fzerorubigd/cardx" title="cardx" target="_blank">cardx</a> based on <a href="https://github.com/jhauberg/cards.py" title="cards.py" target="_blank">cards.py</a> — a <strong>free</strong> and <strong>open-source</strong> tool for board and card game makers.</p>
+          <p>Any contribution would be appreciated!</p>
+          <p style="text-align: center;">***</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cached cut-guide SVG so cards can re-use it by referencing '#cut-guide-lines' -->
+    <div class="do-not-print" style="display: none;">
+      <svg>
+        <g id="cut-guide-lines">
+          <line class="cut-guide-line" x1="5" y1="0" x2="5" y2="10" />
+          <line class="cut-guide-line" x1="0" y1="5" x2="10" y2="5" />
+        </g>
+      </svg>
+    </div>
+ 
+
+{{ end }}
+
+{{ define "deck" }}
+<!DOCTYPE html>
+<!-- This is based on cards.py project, mainly because the template support is not what I need in the project : https://github.com/jhauberg/cards.py (MIT License) -->
+<html>
+<head>
+    <title>Deck {{ .Name }} - {{ .Version  }}</title>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/cards.css">
+
+    <link rel="icon" type="image/svg+xml" href="resources/_logo_mask.svg">
+    <link rel="mask-icon" color="black" type="image/svg+xml" href="resources/_logo_mask.svg">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="author" content="{{ .Author }}">
+    <meta name="generator" content="cardx {{ .Version }}">
+    <meta name="description" content="{{ .Description }}">
+
+    <script type="text/javascript" src="js/index.js"></script>
+    {{ template "css" }}
+  </head>
+  <body>
+    {{ template "toolbar" . }}
+    {{ $pages := .Pages }}
+    {{ range $page := $pages }}
+    {{ template "page" $page }}
+    {{ end }}
+
+    <div class="ui-footer do-not-print">
+      <a href="https://github.com/fzerorubigd/cardx" title="cardx" target="_blank" style="text-decoration: none;">
+        <img src="resources/_logo_mask.svg" width="34" height="34">
+      </a>
+      <p>
+      Cards generated {{ now }}
+        <br />
+        <br />
+      </p>
+      <p>
+        <button onclick="window.scrollTo(0, 0);" style="padding: .6em;">
+          Back to top ⬆
+        </button>
+      </p>
+    </div>
+  </body>
+</html>
+{{ end }}

@@ -1,0 +1,10 @@
+{{ define "card" }}
+
+{{ .Name }}
+
+{{ .Index }}
+
+{{ $desc := .Str "text" }}
+{{ $desc }}/{{ .Int "score" }}
+
+{{ end }}
