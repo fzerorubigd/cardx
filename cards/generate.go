@@ -28,7 +28,8 @@ func Generate(p *Project, path string, files []string, getter func(string) []byt
 			return fmt.Errorf("create output file failed: %w", err)
 		}
 
-		if err := generateDeck(w, deck, string(baseTpl)); err != nil {
+		a, err := generateDeck(w, deck, string(baseTpl))
+		if err != nil {
 			return fmt.Errorf("generate deck %q failed: %w", deck.Name, err)
 		}
 		for _, fl := range files {
@@ -41,15 +42,48 @@ func Generate(p *Project, path string, files []string, getter func(string) []byt
 			}
 		}
 
+		for path, translated := range a.project {
+			data, err := ioutil.ReadFile(path)
+			if err != nil {
+				return fmt.Errorf("copy project assets %q failed: %w", path, err)
+			}
+			if err := copyFile(translated, root, data); err != nil {
+				return fmt.Errorf("copy assets %q failed: %w", fl, err)
+			}
+		}
+
 	}
 
 	return nil
 }
 
-func generateDeck(w io.Writer, d *DeckWithData, baseTemplate string) error {
-	tmpl, err := template.Must(template.New("single_deck").Funcs(sprig.FuncMap()).Parse(baseTemplate)).ParseFiles(d.Template)
+type assets struct {
+	prefix  string
+	project map[string]string
+	//global  map[string]string
+}
+
+func (a *assets) translateProject(in string) string {
+	translated, ok := a.project[in]
+	if ok {
+		return translated
+	}
+
+	translated = filepath.Join(a.prefix, in)
+	a.project[in] = translated
+	return translated
+}
+
+func generateDeck(w io.Writer, d *DeckWithData, baseTemplate string) (*assets, error) {
+	fns := sprig.FuncMap()
+	ret := &assets{
+		prefix:  "assets",
+		project: make(map[string]string),
+	}
+	fns["asset"] = func(in string) string { return ret.translateProject(in) }
+	tmpl, err := template.Must(template.New("single_deck").Funcs(fns).Parse(baseTemplate)).ParseFiles(d.Template)
 	if err != nil {
-		return fmt.Errorf("parsing template for deck %q failed: %w", d.Name, err)
+		return nil, fmt.Errorf("parsing template for deck %q failed: %w", d.Name, err)
 	}
 
 	if !d.HasCSSTemplate {
@@ -61,10 +95,10 @@ func generateDeck(w io.Writer, d *DeckWithData, baseTemplate string) error {
 	}
 
 	if err := tmpl.ExecuteTemplate(w, "deck", d.Deck); err != nil {
-		return fmt.Errorf("execute template for deck %q failed: %w", d.Name, err)
+		return nil, fmt.Errorf("execute template for deck %q failed: %w", d.Name, err)
 	}
 
-	return nil
+	return ret, nil
 }
 
 func copyFile(src string, root string, data []byte) error {

@@ -43,7 +43,10 @@ func (dw *DeckWithData) loadCards() error {
 }
 
 func (dw *DeckWithData) validateTemplate() error {
-	tmpl, err := template.New(fmt.Sprintf("%s_user_template", dw.Name)).Funcs(sprig.FuncMap()).ParseFiles(dw.Template)
+	// A hack for now, TODO: fix it
+	fns := sprig.FuncMap()
+	fns["asset"] = func(in string) string { return in }
+	tmpl, err := template.New(fmt.Sprintf("%s_user_template", dw.Name)).Funcs(fns).ParseFiles(dw.Template)
 	if err != nil {
 		return fmt.Errorf("load deck %q template failed: %w", dw.Name, err)
 	}
