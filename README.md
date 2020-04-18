@@ -10,3 +10,4 @@ TODO:
 ----
 
 1. ~~The asset function in templates for list of files to copy~~
+2. Support for card size 

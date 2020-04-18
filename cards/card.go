@@ -57,6 +57,9 @@ func (a *Attributes) Get(key, typ string) (interface{}, error) {
 			return nil, fmt.Errorf("key %q is not a boolean: %w", key, err)
 		}
 		return b, nil
+	case "strarray":
+		data := strings.Split(a.values[key], "|")
+		return data, nil
 	default:
 		return nil, fmt.Errorf("invalid type %q", key)
 	}
@@ -70,6 +73,16 @@ func (a *Attributes) Str(key string) (string, error) {
 	}
 
 	return s.(string), nil
+}
+
+// StrArray try to convert | (pipe) seperated string to array
+func (a *Attributes) StrArray(key string) ([]string, error) {
+	s, err := a.Get(key, "strarray")
+	if err != nil {
+		return nil, err
+	}
+
+	return s.([]string), nil
 }
 
 // Int return the key in the int type
