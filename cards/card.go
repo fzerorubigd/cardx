@@ -43,12 +43,12 @@ func (a *Attributes) Get(key, typ string) (interface{}, error) {
 	a.ensureMap()
 
 	switch strings.ToLower(typ) {
-	case "int", "int64":
+	case "int":
 		i64, err := strconv.ParseInt(a.values[key], 10, 0)
 		if err != nil {
 			return nil, fmt.Errorf("key %q is not an integer: %w", key, err)
 		}
-		return i64, nil
+		return int(i64), nil
 	case "str", "string":
 		return a.values[key], nil
 	case "bool", "boolean":
@@ -86,13 +86,13 @@ func (a *Attributes) StrArray(key string) ([]string, error) {
 }
 
 // Int return the key in the int type
-func (a *Attributes) Int(key string) (int64, error) {
+func (a *Attributes) Int(key string) (int, error) {
 	i, err := a.Get(key, "int")
 	if err != nil {
 		return 0, err
 	}
 
-	return i.(int64), nil
+	return i.(int), nil
 }
 
 // Bool return the boolean value of the key
@@ -205,7 +205,7 @@ func (d *Deck) CSSClass() string {
 // Pages split the cards in A4 printable pages
 func (d Deck) Pages() []Page {
 	// TODO: determine the correct PerPage based on the size
-	pp := 6
+	pp := 9
 	var pages []Page
 
 	for i, current, end := 1, 0, pp; ; i, current, end = i+1, current+pp, end+pp {
