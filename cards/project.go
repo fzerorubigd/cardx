@@ -57,7 +57,6 @@ func (dw *DeckWithData) validateTemplate() error {
 			dw.HasCardTemplate = true
 		case "css":
 			dw.HasCSSTemplate = true
-			fmt.Println("OO")
 		}
 	}
 

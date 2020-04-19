@@ -25,6 +25,16 @@
   height: .75in;
 }
 
+.card-size-75x47 {
+    width: 7.5in;
+    height: 4.7in;
+}
+
+.card-size-75x105 {
+    width: 7.5in;
+    height: 10.5in;
+}
+
 .card-size-25x35 {
   /* Standard card */
   width:  2.5in;

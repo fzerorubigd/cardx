@@ -204,8 +204,12 @@ func (d *Deck) CSSClass() string {
 
 // Pages split the cards in A4 printable pages
 func (d Deck) Pages() []Page {
-	// TODO: determine the correct PerPage based on the size
-	pp := 9
+	width := 76
+	height := 106
+
+	wn := width / d.Width
+	hn := height / d.Height
+	pp := wn * hn
 	var pages []Page
 
 	for i, current, end := 1, 0, pp; ; i, current, end = i+1, current+pp, end+pp {
