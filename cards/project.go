@@ -25,6 +25,7 @@ type Project struct {
 	Author    string
 	Copyright string
 	Version   string
+	Output    string
 	Decks     []*DeckWithData
 }
 
@@ -117,7 +118,9 @@ func NewProject(root string) (*Project, error) {
 		return nil, fmt.Errorf("change directory to project root failed: %w", err)
 	}
 
-	p := &Project{}
+	p := &Project{
+		Output: "generated",
+	}
 
 	if err := p.LoadYML(f); err != nil {
 		return nil, fmt.Errorf("load project failed: %w", err)
