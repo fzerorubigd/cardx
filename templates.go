@@ -96,7 +96,7 @@ func templatesCssCardsCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/css/cards.css", size: 1192, mode: os.FileMode(420), modTime: time.Unix(1587327776, 0)}
+	info := bindataFileInfo{name: "templates/css/cards.css", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -116,7 +116,7 @@ func templatesCssIndexCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/css/index.css", size: 7797, mode: os.FileMode(420), modTime: time.Unix(1586642143, 0)}
+	info := bindataFileInfo{name: "templates/css/index.css", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -136,7 +136,7 @@ func templatesIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/index.html", size: 9221, mode: os.FileMode(420), modTime: time.Unix(1586791107, 0)}
+	info := bindataFileInfo{name: "templates/index.html", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -156,7 +156,7 @@ func templatesJsIndexJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/js/index.js", size: 9008, mode: os.FileMode(420), modTime: time.Unix(1586642143, 0)}
+	info := bindataFileInfo{name: "templates/js/index.js", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -176,7 +176,7 @@ func templatesResources_logo_maskSvg() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/resources/_logo_mask.svg", size: 784, mode: os.FileMode(420), modTime: time.Unix(1586642143, 0)}
+	info := bindataFileInfo{name: "templates/resources/_logo_mask.svg", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
